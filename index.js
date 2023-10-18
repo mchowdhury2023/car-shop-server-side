@@ -57,6 +57,14 @@ async function run() {
             res.send(result);
         })
 
+        //get top five products
+        app.get('/top5products', async (req, res) => {
+            const limit = Number(req.query.limit) || 0;
+            const cursor = productCollection.find().sort({price: -1}).limit(limit); // sort in descending order of price
+            const result = await cursor.toArray();
+            res.send(result);
+        });
+
         app.get('/products/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: new ObjectId(id) };
