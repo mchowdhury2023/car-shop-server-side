@@ -27,6 +27,10 @@ async function run() {
 
         const productCollection = client.db('BrandShopDB').collection('products');
 
+        //testimonial collection
+        const testimonialCollection = client.db('BrandShopDB').collection('testimonials');
+
+
         // Get unique brands
         app.get('/brands', async (req, res) => {
             const cursor = productCollection.aggregate([
@@ -106,6 +110,22 @@ async function run() {
             res.send(result);
         })
 
+        //get all testimonials
+        app.get('/testimonials', async (req, res) => {
+            const cursor = testimonialCollection.find();
+            const result = await cursor.toArray();
+            res.send(result);
+        });
+    
+        //post all testimonial
+
+        app.post('/testimonials', async (req, res) => {
+            const newTestimonial = req.body;
+            const result = await testimonialCollection.insertOne(newTestimonial);
+            res.send(result);
+        });
+
+        
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
