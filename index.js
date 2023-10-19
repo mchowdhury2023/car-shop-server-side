@@ -81,18 +81,19 @@ async function run() {
             const query = { _id: new ObjectId(id) };
             const options = { upsert: true };
             const updatedProduct = req.body;
-            const Coffee = {
+            const product = {
                 $set: {
-                    name: updatedProduct.name,
-                    quantity: updatedProduct.quantity,
-                    supplier: updatedProduct.supplier,
-                    taste: updatedProduct.taste,
-                    category: updatedProduct.category,
+                    brandName: updatedProduct.brandName,
+                    modelName: updatedProduct.modelName,
+                    year: updatedProduct.year,
+                    type: updatedProduct.type,
+                    price: updatedProduct.price,
+                    rating: updatedProduct.rating,
                     details: updatedProduct.details,
                     photo: updatedProduct.photo
                 }
             }
-            const result = await productCollection.updateOne(query, Coffee, options);
+            const result = await productCollection.updateOne(query, product, options);
             res.send(result);
         })
 
